@@ -1,0 +1,121 @@
+DataBase TABLE Creations
+LoginTable 
+CREATE TABLE login
+(
+    userid integer NOT NULL DEFAULT 
+    username character varying(50) NOT NULL,
+    password character varying(50) NOT NULL,
+    lastlogin character varying(50) 
+    CONSTRAINT login_pkey PRIMARY KEY (userid),
+    CONSTRAINT login_username_key UNIQUE (username)
+)
+
+Registeration Table 
+CREATE TABLE registration
+(
+    regid integer NOT NULL DEFAULT 
+    userid integer NOT NULL,
+    firstname character varying(50) NOT NULL,
+    lastname character varying(50) NOT NULL,
+    dob character varying NOT NULL,
+    gender character varying(255) NOT NULL,
+    phonenum character varying NOT NULL,
+    address character varying(50) NOT NULL,
+    created_on character varying(50) default,
+    security_id integer,
+    security_answer character varying(1000) default,
+    CONSTRAINT registration_pkey PRIMARY KEY (regid),
+    CONSTRAINT fk_userid FOREIGN KEY (userid)
+     CONSTRAINT registration_security_id_fkey FOREIGN KEY (security_id)
+        REFERENCES  security_question (security_id) 
+)
+TABLE security_question
+CREATE TABLE security_question
+(
+    security_id integer NOT NULL DEFAULT),
+    security_question character varying(1000) ,
+    CONSTRAINT security_question_pkey PRIMARY KEY (security_id)
+)
+
+TABLE product
+
+CREATE TABLE product
+(
+    product_id integer NOT NULL DEFAULT,
+    product_name character varying(150) ,
+    product_description character varying(1000) ,
+    product_price double precision,
+    max_quantity integer,
+    category_id integer,
+    istrendy boolean,
+    isnextrelease boolean,
+    CONSTRAINT product_pkey PRIMARY KEY (product_id),
+    CONSTRAINT fk_category_id FOREIGN KEY (category_id)
+        REFERENCES  category (category_id) 
+)
+TABLE  orders
+
+CREATE TABLE  orders
+(
+    order_id integer NOT NULL DEFAULT,
+    product_id integer,
+    userid integer,
+    quantity integer,
+    CONSTRAINT orders_pkey PRIMARY KEY (order_id),
+    CONSTRAINT orders_product_id_fkey FOREIGN KEY (product_id)
+     REFERENCES  product (product_id) ,
+     CONSTRAINT orders_userid_fkey FOREIGN KEY (userid)
+        REFERENCES  login (userid) 
+)
+TABLE deliveryaddress
+CREATE TABLE deliveryaddress
+(
+    del_id integer NOT NULL DEFAULT
+    userid integer NOT NULL,
+    del_profileAddr character varying(250)
+    del_address1 character varying(250)
+    del_address2 character varying(250) ,
+    del_address3 character varying(255) ,
+    CONSTRAINT deliveryaddress_pkey PRIMARY KEY (del_id),
+    CONSTRAINT fk_login FOREIGN KEY (userid)
+       REFERENCES login (userid) 
+)
+
+
+
+
+TABLE date
+CREATE TABLE date
+(
+    date_id integer NOT NULL DEFAULT 
+    userid integer,
+    date character varying(50) ,
+    country character varying(150) ,
+    state character varying(150) ,
+    city character varying(150) ,
+    del_address1 character varying(200) ,
+    zip character varying(6) ,
+    CONSTRAINT date_pkey PRIMARY KEY (date_id),
+    CONSTRAINT fk_login FOREIGN KEY (userid)
+        REFERENCES login (userid) 
+)
+TABLE configuration
+CREATE TABLE configuration
+(
+    configuration_id integer NOT NULL DEFAULT),
+    configuration_name character varying(60) ,
+    configuration_value integer,
+    CONSTRAINT configuration_pkey PRIMARY KEY (configuration_id)
+)
+
+
+
+
+ TABLE category
+CREATE TABLE category
+(
+    category_id integer NOT NULL DEFAULT,
+    category_name character varying(255) ,
+    category_description character varying(1000) ,
+    CONSTRAINT category_id PRIMARY KEY (category_id)
+)
